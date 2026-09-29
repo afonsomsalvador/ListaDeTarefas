@@ -32,6 +32,7 @@ const data = [
 
 export default function HomeScreen() {
   const [tarefas, setTarefas] = useState(data);
+  const [adicionarTarefa, setAdicionarTarefa] = useState("");
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,11 +50,22 @@ export default function HomeScreen() {
           }}
         >
           <TextInput
-            onChangeText={() => null}
-            value={""}
+            onChangeText={(texto) => setAdicionarTarefa(texto)}
+            value={adicionarTarefa}
             placeholder="Adicione nova tarefa"
           />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              const novaTarefaObj = {
+                id: (tarefas.length + 1).toString(),
+                titulo: adicionarTarefa,
+                concluida: false,
+              } as Tarefa;
+
+              setTarefas([...tarefas, novaTarefaObj]);
+              setAdicionarTarefa("");
+            }}
+          >
             <Text>Adicionar</Text>
           </TouchableOpacity>
         </View>
