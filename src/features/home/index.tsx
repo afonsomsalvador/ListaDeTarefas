@@ -1,11 +1,11 @@
 import { RootStackParamList } from "@/navigation/types";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "expo-router";
 import { useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
-type NavigationProps = NativeStackNavigationProp<RootStackParamList, "Home">;
+type NavigationProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
-const HomeScreen = ({ navigation, route }: NavigationProps) => {
+const HomeScreen = ({ navigation }: NavigationProps) => {
   const [aCarregar, setACarregar] = useState(true);
 
   return (
@@ -21,6 +21,22 @@ const HomeScreen = ({ navigation, route }: NavigationProps) => {
           <Text>Carregando...</Text>
         </View>
       )}
+      <TouchableOpacity onPress={() => navigation.navigate("Formulario")}>
+        <Text>Ir para Formulário</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{
+          borderWidth: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          marginHorizontal: 20,
+          marginVertical: 10,
+        }}
+        onPress={() => navigation.navigate("Tarefas")}
+      >
+        <Text>Ir para Tarefas</Text>
+      </TouchableOpacity>
       {/* Imagem remote (remover display none para ver)*/}
       <Image
         source={{

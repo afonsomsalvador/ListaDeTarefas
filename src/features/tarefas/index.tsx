@@ -1,14 +1,16 @@
 import CartaoTarefa from "@/components/cartaoTarefa";
 import { Tarefa } from "@/components/cartaoTarefa/types";
 import { cores as colors } from "@/infraestructure/theme/colors";
+import { RootStackParamList } from "@/navigation/types";
+import { NativeStackScreenProps } from "expo-router";
 import { useState } from "react";
 import {
-    SectionList,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  SectionList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 /** Dados iniciais das tarefas */
@@ -30,7 +32,9 @@ const data = [
   },
 ] as Array<Tarefa>;
 
-const TarefasScreen = () => {
+type NavigationProps = NativeStackScreenProps<RootStackParamList, "Tarefas">;
+
+const TarefasScreen = ({ navigation }: NavigationProps) => {
   // Estado local, memória interna do componente
   const [tarefas, setTarefas] = useState(data);
   const [adicionarTarefa, setAdicionarTarefa] = useState("");
@@ -45,6 +49,9 @@ const TarefasScreen = () => {
       <View
         style={{
           flex: 1,
+          backgroundColor: "#000",
+          padding: 15,
+          alignItems: "center",
         }}
       >
         <Text style={styles.titlePage}>
@@ -107,7 +114,11 @@ const TarefasScreen = () => {
           ]}
           style={{ marginTop: 30 }}
           renderItem={({ item: task }) => (
-            <CartaoTarefa key={task.id} tarefa={task} />
+            <CartaoTarefa
+              key={task.id}
+              tarefa={task}
+              onClick={() => navigation.navigate("Detalhe", { tarefa: task })}
+            />
           )}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={{ fontWeight: "bold", fontSize: 18, color: "#FFF" }}>
